@@ -1,0 +1,28 @@
+services:
+  api:
+    build:  
+      context: ./api
+      args: 
+        NODE_ENV: development
+    ports:
+      - 5000:5000
+    environment:
+      DATABASE_URL: postgresql://postres:postgres@postres:5432/devdb
+    volumes:
+      - ./api/src:/app/src
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: devdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

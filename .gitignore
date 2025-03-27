@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# React build
+/build/
+# React source maps
+*.map
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# IDE or editor folders
+.vscode/
+.idea/
+
+# Test output
+coverage/
+
+# PostgreSQL data
+*.sql
+*.sqlite
+
+# Docker related files
+.docker/
+
+# Dist folder (if you use Webpack, for example)
+dist/
+
+# Optional: Optional build artifacts (depending on your build process)
+*.tgz
