@@ -33,6 +33,9 @@ coverage/
 *.sql
 *.sqlite
 
+# Rest data
+*.rest
+
 # Docker related files
 .docker/
 
