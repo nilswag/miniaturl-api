@@ -6,12 +6,12 @@ services:
         NODE_ENV: development
     ports:
       - 5000:5000
-    environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/devdb
     volumes:
       - ./api/src:/app/src
     depends_on:
       - postgres
+    env_file:
+      - ./.env
 
   postgres:
     image: postgres:latest
@@ -23,6 +23,8 @@ services:
       POSTGRES_DB: devdb
     volumes:
       - pgdata:/var/lib/postgresql/data
+    env_file:
+      - ./.env
 
 volumes:
   pgdata:

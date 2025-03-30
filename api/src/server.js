@@ -9,5 +9,5 @@ app.get("/", (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`MiniatURL API listenting at http://localhost:${ port }`);
+  console.log(`MiniatURL API listenting at http://localhost: ${ port }`);
 })
