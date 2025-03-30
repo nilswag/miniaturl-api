@@ -7,7 +7,7 @@ services:
     ports:
       - 5000:5000
     environment:
-      DATABASE_URL: postgresql://postres:postgres@postres:5432/devdb
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/devdb
     volumes:
       - ./api/src:/app/src
     depends_on:
