@@ -20,6 +20,7 @@ const format_timestamp = require("../util/timestamp");
  */
 const log = (req, res, next) => {
   console.log(`[${format_timestamp()}] ${req.method} request at ${req.url}`);
+  
   next();
 };
 
@@ -38,8 +39,10 @@ const log = (req, res, next) => {
  */
 const error = (err, req, res, next) => {
   const timestamp = format_timestamp();
-  console.error(`[${timestamp}] Error: ${err.message}`);
-  res.status(err.status || 500).send({
+
+  console.error(`[${timestamp}] Error: ${err.message || "Internal server error"}`);
+
+  res.status(err.status || 500).json({
     error: err.message || "Internal server error",
     timestamp: timestamp
   });
