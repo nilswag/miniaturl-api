@@ -1,22 +1,27 @@
 /**
- * Utility module for formatting timestamps.
+ * Utility module for generating random short URLs.
  * 
- * @module timestamp
+ * @module url_generator
  */
 
 /**
- * Formats the current date and time as a timestamp.
+ * Generates a random short URL string.
  * 
- * @function format_timestamp
- * @returns {string} The formatted timestamp in the format `YYYY-MM-DD HH:MM:SS`.
+ * @function generate_url
+ * @returns {string} A randomly generated short URL consisting of 8 alphanumeric characters.
  * 
  * @example
- * const timestamp = format_timestamp();
- * console.log(timestamp);
- * // Output: "2025-03-31 12:00:00"
+ * const { generate_url } = require("./url_generator");
+ * const short_url = generate_url();
+ * console.log(short_url);
+ * // Output: "aBc123Xy" (example output, will vary)
  */
-const format_timestamp = () => {
-  return new Date().toISOString().replace("T", " ").split(".")[0];
+const generate_url = () => {
+  const characters = "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789";
+  let short_url = "";
+  for (let i = 0; i < 8; i++) 
+    short_url += characters.charAt(Math.floor(Math.random() * characters.length));
+  return short_url;
 };
 
-module.exports = format_timestamp;
+module.exports = generate_url;

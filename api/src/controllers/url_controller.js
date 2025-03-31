@@ -25,6 +25,7 @@ const add_url = async (req, res, next) => {
     let confirm = await url_service.add_url(long_url);
     res.status(200).send(confirm);
   } catch (error) {
+    console.error("Error adding URL:", error);
     return next(new Error("Failed to add URL"));
   }
 };
