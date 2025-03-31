@@ -5,7 +5,8 @@ const setup_urls = async () => {
     CREATE TABLE IF NOT EXISTS urls (
       id SERIAL PRIMARY KEY,
       long_url TEXT NOT NULL,
-      short_url VARCHAR(10) UNIQUE NOT NULL,
+      short_url VARCHAR(8) UNIQUE NOT NULL,
+      clicks INT DEFAULT 0,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   `);
