@@ -7,4 +7,4 @@ const generate_url = () => {
   return short_url;
 };
 
-module.exports = { generate_url };
+module.exports = generate_url;

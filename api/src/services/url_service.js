@@ -1,5 +1,5 @@
 const { fetch_url_long, add_entry } = require("../db/url_queries");
-const { generate_url } = require("../util/url_generator");
+const generate_url = require("../util/url_generator");
 
 const add_url = async (long_url) => {
   let short_url = generate_url();

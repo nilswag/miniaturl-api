@@ -1,6 +1,6 @@
 const { run_query } = require("./db");
 
-const setup_urls = async () => {
+const urls = async () => {
   const res = await run_query(`
     CREATE TABLE IF NOT EXISTS urls (
       id SERIAL PRIMARY KEY,
@@ -12,4 +12,4 @@ const setup_urls = async () => {
   `);
 };
 
-module.exports = { setup_urls };
+module.exports = { urls };
