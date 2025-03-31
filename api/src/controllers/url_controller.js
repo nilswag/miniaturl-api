@@ -21,8 +21,12 @@ const add_url = async (req, res, next) => {
     return next(new Error("Invalid or missing URL"));
   }
 
-  let confirm = await url_service.add_url(long_url);
-  res.status(200).send(confirm);
+  try {
+    let confirm = await url_service.add_url(long_url);
+    res.status(200).send(confirm);
+  } catch (error) {
+    return next(new Error("Failed to add URL"));
+  }
 };
 
 module.exports = { add_url };
