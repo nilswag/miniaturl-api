@@ -1,9 +1,18 @@
 services:
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - api
+
   api:
     build:  
       context: ./api
-      args: 
-        NODE_ENV: development
     ports:
       - 5000:5000
     volumes:

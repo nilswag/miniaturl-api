@@ -20,4 +20,4 @@ app.use(require("./middleware/log_middleware").error); // Use error middleware t
 
 // Setup
 const port = 5000;
-app.listen(port, () => console.log(`Server listening on port ${ port }`));
+app.listen(port, () => console.log(`Server listening on port ${port}`));

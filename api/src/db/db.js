@@ -29,7 +29,7 @@ const pool = new Pool({
  */
 pool.connect()
   .then(client => {
-    console.log(`Connected to database '${ process.env.PG_DATABASE }' at '${ process.env.PG_HOST }'`);
+    console.log(`Connected to database '${process.env.PG_DATABASE}' at '${process.env.PG_HOST}'`);
   })
   .catch(err => {
     console.error("Connection error", err);
