@@ -28,7 +28,7 @@ const add_url = async (req, res, next) => {
     res.status(200).send(confirm);
   } catch (error) {
     const err = new Error("Failed to add URL");
-    err.status = 505;
+    err.status = 500;
     return next(err);
   }
 };
