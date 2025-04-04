@@ -79,7 +79,7 @@ const get_urls = async () => {
     let res = await queries.fetch_all();
     return res;
   } catch (error) {
-    const err = new Error("Error fetching URLs: " + error);
+    const err = new Error("Error fetching URLs: " + error.message);
     err.status = 501;
     throw err;
   }

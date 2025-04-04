@@ -32,7 +32,7 @@ const add_entry = async (long_url, short_url) => {
     );
     return res.rows[0] ? res.rows : null;
   } catch (error) {
-    const err = new Error("Error running query: " + error);
+    const err = new Error("Error running query: " + error.message);
     err.status = 500;
     throw err;
   }
@@ -63,7 +63,7 @@ const fetch_id = async (id) => {
   
     return res.rows[0] ? res.rows : null;
   } catch (error) {
-    const err = new Error("Error running query: " + error);
+    const err = new Error("Error running query: " + error.message);
     err.status = 500;
     throw err;
   }
@@ -94,7 +94,7 @@ const fetch_long = async (long_url) => {
   
     return res.rows[0] ? res.rows : null;
   } catch (error) {
-    const err = new Error("Error running query: " + error);
+    const err = new Error("Error running query: " + error.message);
     err.status = 500;
     throw err;
   }
@@ -124,7 +124,7 @@ const fetch_short = async (short_url) => {
   
     return res.rows[0] ? res.rows : null;
   } catch (error) {
-    const err = new Error("Error running query: " + error);
+    const err = new Error("Error running query: " + error.message);
     err.status = 500;
     throw err;
   }
@@ -148,7 +148,7 @@ const fetch_all = async () => {
     
     return res.rows[0] ? res.rows : null;
   } catch (error) {
-    const err = new Error("Error running query: " + error);
+    const err = new Error("Error running query: " + error.message);
     err.status = 500;
     throw err;
   }

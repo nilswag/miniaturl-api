@@ -57,7 +57,7 @@ const get_urls = async (req, res, next) => {
     let confirm = await service.get_urls();
     res.status(200).send(confirm);
   } catch (error) {
-    const err = new Error("Failed to fetch urls");
+    const err = new Error("Failed to fetch urls" + error.message);
     err.status = 404;
     return next(err);
   }
