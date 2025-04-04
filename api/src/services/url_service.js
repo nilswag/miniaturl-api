@@ -62,7 +62,7 @@ const add_url = async (long_url) => {
  * 
  * @async
  * @function get_urls
- * @returns {Promise<Object[]>} An array of URL entries if successful.
+ * @returns {Promise<Object[]|null>} An array of URL entries if successful, or `null` if no rows are found.
  * @throws {Error} If the URLs cannot be fetched from the database.
  * 
  * @example

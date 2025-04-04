@@ -19,6 +19,7 @@ const { log } = require("./log_middleware");
  * @param {Object} res - The HTTP response object.
  * @param {Function} next - The next middleware function to be called.
  * @throws {Error} If the token is invalid or cannot be verified, an error with status 401 is thrown.
+ * @property {Object} req.decoded - The decoded JWT payload added to the request object.
  * 
  * @example
  * // Example usage in an Express app:

@@ -13,7 +13,7 @@ const { run_query } = require("./db")
  * @function add_entry
  * @param {string} long_url - The original long URL.
  * @param {string} short_url - The shortened URL.
- * @returns {Promise<Object|null>} The inserted row if successful, or `null` if no row was inserted.
+ * @returns {Promise<Object[]|null>} The inserted row(s) if successful, or `null` if no row was inserted.
  * @throws {Error} If the query fails, an error is thrown to be handled by the middleware.
  * 
  * @example
@@ -135,7 +135,7 @@ const fetch_short = async (short_url) => {
  * 
  * @async
  * @function fetch_all
- * @returns {Promise<Object|null>} An object containing all rows if successful, or `null` if no rows are found.
+ * @returns {Promise<Object[]|null>} An array of rows if successful, or `null` if no rows are found.
  * @throws {Error} If the query fails, an error is thrown to be handled by the middleware.
  * 
  * @example
