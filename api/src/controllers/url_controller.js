@@ -18,15 +18,18 @@ const add_url = async (req, res, next) => {
   try {
     new URL(long_url);
   } catch (error) {
-    return next(new Error("Invalid or missing URL"));
+    const err = new Error("Invalid or missing URL");
+    err.status = 400;
+    return next(err);
   }
 
   try {
     let confirm = await service.add_url(long_url);
     res.status(200).send(confirm);
   } catch (error) {
-    console.error("Error adding URL:", error);
-    return next(new Error("Failed to add URL"));
+    const err = new Error("Failed to add URL");
+    err.status = 500;
+    return next(err);
   }
 };
 
@@ -54,8 +57,9 @@ const get_urls = async (req, res, next) => {
     let confirm = await service.get_urls();
     res.status(200).send(confirm);
   } catch (error) {
-    console.error("Error fetching urls:", error);
-    return next(new Error("Failed to fetch urls"));
+    const err = new Error("Failed to fetch urls" + error.message);
+    err.status = 500;
+    return next(err);
   }
 }
 

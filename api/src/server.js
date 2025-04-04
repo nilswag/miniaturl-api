@@ -9,6 +9,7 @@ const app = express();
 
 // Global middleware
 app.use(express.json()); // Use json middleware to handle json requests
+app.use(require("cookie-parser")()); // Use cookie-parser middleware to handle cookies
 app.use(require("./middleware/log_middleware").log); // Use log middleware to log requests
 
 // Setup routers

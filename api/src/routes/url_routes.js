@@ -7,6 +7,22 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/url_controller");
+const auth = require("../middleware/auth_middleware");
+
+/**
+ * Middleware to authenticate all routes in this router.
+ * 
+ * @name router.use
+ * @function
+ * @memberof module:url_routes
+ * @inner
+ * @param {Function} auth.authenticate - The authentication middleware function.
+ * 
+ * @example
+ * // All routes in this router will require authentication:
+ * router.use(auth.authenticate);
+ */
+router.use(auth.authenticate);
 
 /**
  * Route to add a new URL.
