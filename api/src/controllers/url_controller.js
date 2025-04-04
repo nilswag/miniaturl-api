@@ -19,7 +19,7 @@ const add_url = async (req, res, next) => {
     new URL(long_url);
   } catch (error) {
     const err = new Error("Invalid or missing URL");
-    err.status = 404;
+    err.status = 400;
     return next(err);
   }
 
