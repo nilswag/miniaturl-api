@@ -53,8 +53,9 @@ const run_query = async (query, values = []) => {
     const res = await pool.query(query, values);
     return res;
   } catch (error) { 
-    console.error("Database error:", error);
-    throw error;
+    const err = new Error("Database error: " + error);
+    err.status  = 500;
+    throw err;
   }
 };
 

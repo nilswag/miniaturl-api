@@ -40,8 +40,9 @@ const add_url = async (long_url) => {
       else break;
       tries++;
     } catch (error) {
-      console.error("Error fetching URL:", error);
-      throw new Error("Failed to check URL uniqueness");
+      const err = new Error("Error fetching URL: " + error);
+      err.status = 501;
+      throw err;
     }
   }
 
@@ -50,8 +51,9 @@ const add_url = async (long_url) => {
     let res = await queries.add_entry(long_url, short_url);
     return res;
   } catch (error) {
-    console.log("Error adding URL:", error);
-    throw new Error("Failed to add URL"); 
+    const err = new Error("Error adding URL: " + error);
+    err.status = 501;
+    throw err; 
   }
 };
 
@@ -77,8 +79,9 @@ const get_urls = async () => {
     let res = await queries.fetch_all();
     return res;
   } catch (error) {
-    console.log("Error fetching urls:", error);
-    throw new Error("Failed to fetch urls");
+    const err = new Error("Error fetching URLs: " + error);
+    err.status = 501;
+    throw err;
   }
 }
 

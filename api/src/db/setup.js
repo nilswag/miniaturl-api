@@ -36,8 +36,9 @@ const urls = async () => {
       )
     `);
   } catch (error) {
-    console.error("Error creating urls table:", error);
-    throw error;
+    const err = new Error("Error creating urls table: " + error);
+    err.status = 500;
+    throw err;
   }
 };
 
