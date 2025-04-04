@@ -8,6 +8,23 @@ const jwt = require("jsonwebtoken");
 const { v4 } = require("uuid");
 const { log } = require("./log_middleware");
 
+/**
+ * Middleware to authenticate requests using a JWT token.
+ * If no token is provided, an anonymous token is generated and assigned.
+ * 
+ * @function authenticate
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} req.headers - The headers from the request.
+ * @param {string} [req.headers.authorization] - The authorization header containing the JWT token.
+ * @param {Object} res - The HTTP response object.
+ * @param {Function} next - The next middleware function to be called.
+ * @throws {Error} If the token is invalid or cannot be verified, an error with status 401 is thrown.
+ * 
+ * @example
+ * // Example usage in an Express app:
+ * const { authenticate } = require("./auth_middleware");
+ * app.use(authenticate);
+ */
 const authenticate = (req, res, next) => {
   let token = req.headers.authorization && req.headers.authorization.split(" ")[1];
 
@@ -15,19 +32,19 @@ const authenticate = (req, res, next) => {
     token = jwt.sign(
       { type: "anonymous", id: v4() },
       process.env.JWT_SECRET,
-      { expiresIn: "14d" }
+      { expiresIn: "30d" }
     );
   }
 
   try {
-    
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.decoded = decoded;
+    next();
   } catch (error) {
     const err = new Error("Unauthorized");
     err.status = 401;
-    return next(err);
+    throw err;
   }
-
-  return next();
 }
 
 module.exports = { authenticate };
