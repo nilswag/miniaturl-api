@@ -41,7 +41,7 @@ const add_url = async (long_url) => {
       tries++;
     } catch (error) {
       const err = new Error("Error fetching URL: " + error);
-      err.status = 501;
+      err.status = 500;
       throw err;
     }
   }
