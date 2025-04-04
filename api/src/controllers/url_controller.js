@@ -19,7 +19,7 @@ const add_url = async (req, res, next) => {
     new URL(long_url);
   } catch (error) {
     const err = new Error("Invalid or missing URL");
-    err.status = 404;
+    err.status = 400;
     return next(err);
   }
 
@@ -28,7 +28,7 @@ const add_url = async (req, res, next) => {
     res.status(200).send(confirm);
   } catch (error) {
     const err = new Error("Failed to add URL");
-    err.status = 505;
+    err.status = 500;
     return next(err);
   }
 };
@@ -58,7 +58,7 @@ const get_urls = async (req, res, next) => {
     res.status(200).send(confirm);
   } catch (error) {
     const err = new Error("Failed to fetch urls" + error.message);
-    err.status = 404;
+    err.status = 500;
     return next(err);
   }
 }
