@@ -4,7 +4,7 @@
  * @module url_controller
  */
 
-const url_service = require("../services/url_service");
+const service = require("../services/url_service");
 
 /**
  * Adds a new URL to the database.
@@ -22,12 +22,41 @@ const add_url = async (req, res, next) => {
   }
 
   try {
-    let confirm = await url_service.add_url(long_url);
-    res.status(200).send({ long_url: long_url });
+    let confirm = await service.add_url(long_url);
+    res.status(200).send(confirm);
   } catch (error) {
     console.error("Error adding URL:", error);
     return next(new Error("Failed to add URL"));
   }
 };
 
-module.exports = { add_url };
+/**
+ * Retrieves all URLs from the database and sends them in the response.
+ * 
+ * @async
+ * @function get_urls
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ * @param {Function} next - The middleware function to handle errors.
+ * @returns {Promise<void>} Sends a JSON response containing all URLs or an error message.
+ * 
+ * @example
+ * // Example response:
+ * // {
+ * //   "urls": [
+ * //     { "id": 1, "long_url": "https://example.com", "short_url": "abc123", "clicks": 0 },
+ * //     { "id": 2, "long_url": "https://another.com", "short_url": "xyz789", "clicks": 5 }
+ * //   ]
+ * // }
+ */
+const get_urls = async (req, res, next) => {
+  try {
+    let confirm = await service.get_urls();
+    res.status(200).send(confirm);
+  } catch (error) {
+    console.error("Error fetching urls:", error);
+    return next(new Error("Failed to fetch urls"));
+  }
+}
+
+module.exports = { add_url, get_urls };

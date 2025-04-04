@@ -30,7 +30,7 @@ const add_entry = async (long_url, short_url) => {
       `,
       [ long_url, short_url ]
     );
-    return res.rows[0] ? res : null;
+    return res.rows[0] ? res.rows : null;
   } catch (error) {
     console.log("Error inserting URL:", error);
     throw error;
@@ -41,16 +41,16 @@ const add_entry = async (long_url, short_url) => {
  * Fetches a URL entry by its ID.
  * 
  * @async
- * @function fetch_url_id
+ * @function fetch_id
  * @param {number} id - The ID of the URL entry.
  * @returns {Promise<Object|null>} The fetched row if found, or `null` if no row was found.
  * @throws {Error} If the query fails, an error is thrown to be handled by the middleware.
  * 
  * @example
- * const result = await fetch_url_id(1);
+ * const result = await fetch_id(1);
  * console.log(result);
  */
-const fetch_url_id = async (id) => {
+const fetch_id = async (id) => {
   try {
     const res = await run_query(
       `
@@ -60,7 +60,7 @@ const fetch_url_id = async (id) => {
       [ id ]
     );
   
-    return res.rows[0] ? res : null;
+    return res.rows[0] ? res.rows : null;
   } catch (error) {
     console.error("Error fetching URL by ID:", error);
     throw error;
@@ -71,16 +71,16 @@ const fetch_url_id = async (id) => {
  * Fetches a URL entry by its long URL.
  * 
  * @async
- * @function fetch_url_long
+ * @function fetch_long
  * @param {string} long_url - The original long URL.
  * @returns {Promise<Object|null>} The fetched row if found, or `null` if no row was found.
  * @throws {Error} If the query fails, an error is thrown to be handled by the middleware.
  * 
  * @example
- * const result = await fetch_url_long("https://example.com");
+ * const result = await fetch_long("https://example.com");
  * console.log(result);
  */
-const fetch_url_long = async (long_url) => {
+const fetch_long = async (long_url) => {
   try {
     const res = await run_query(
       `
@@ -90,7 +90,7 @@ const fetch_url_long = async (long_url) => {
       [ long_url ]
     );
   
-    return res.rows[0] ? res : null;
+    return res.rows[0] ? res.rows : null;
   } catch (error) {
     console.log("Error fetching URL by long URL:", error);
     throw error;
@@ -101,16 +101,16 @@ const fetch_url_long = async (long_url) => {
  * Fetches a URL entry by its short URL.
  * 
  * @async
- * @function fetch_url_short
+ * @function fetch_short
  * @param {string} short_url - The shortened URL.
  * @returns {Promise<Object|null>} The fetched row if found, or `null` if no row was found.
  * @throws {Error} If the query fails, an error is thrown to be handled by the middleware.
  * 
  * @example
- * const result = await fetch_url_short("abc123");
+ * const result = await fetch_short("abc123");
  * console.log(result);
  */
-const fetch_url_short = async (short_url) => {
+const fetch_short = async (short_url) => {
   try {
     const res = await run_query(`
       SELECT * FROM urls
@@ -119,11 +119,34 @@ const fetch_url_short = async (short_url) => {
       [ short_url ]
     );
   
-    return res.rows[0] ? res : null;
+    return res.rows[0] ? res.rows : null;
   } catch (error) {
     console.log("Error fetching URL by short URL:", error);
     throw error;
   }
 };
 
-module.exports = { add_entry, fetch_url_id, fetch_url_long, fetch_url_short };
+/**
+ * Fetches all URL entries from the `urls` table.
+ * 
+ * @async
+ * @function fetch_all
+ * @returns {Promise<Object|null>} An object containing all rows if successful, or `null` if no rows are found.
+ * @throws {Error} If the query fails, an error is thrown to be handled by the middleware.
+ * 
+ * @example
+ * const result = await fetch_all();
+ * console.log(result);
+ */
+const fetch_all = async () => {
+  try {
+    const res = await run_query(`SELECT * FROM urls`);
+    
+    return res.rows[0] ? res.rows : null;
+  } catch (error) {
+    console.log("Error fetching URLs:", error);
+    throw error;
+  }
+}
+
+module.exports = { add_entry, fetch_id, fetch_long, fetch_short, fetch_all };

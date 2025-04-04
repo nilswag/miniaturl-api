@@ -4,7 +4,7 @@
  * @module url_service
  */
 
-const { fetch_url_long, add_entry } = require("../db/url_queries");
+const queries = require("../db/url_queries");
 const generate_url = require("../util/url_generator");
 
 /**
@@ -36,7 +36,7 @@ const add_url = async (long_url) => {
   let tries = 0;
   while (tries < max_tries) {
     try {
-      if (await fetch_url_long(long_url).rows) short_url = generate_url();
+      if (await queries.fetch_long(long_url)) short_url = generate_url();
       else break;
       tries++;
     } catch (error) {
@@ -47,7 +47,7 @@ const add_url = async (long_url) => {
 
   // Add the URL entry to the database
   try {
-    let res = await add_entry(long_url, short_url);
+    let res = await queries.add_entry(long_url, short_url);
     return res;
   } catch (error) {
     console.log("Error adding URL:", error);
@@ -55,4 +55,31 @@ const add_url = async (long_url) => {
   }
 };
 
-module.exports = { add_url };
+/**
+ * Retrieves all URLs from the database.
+ * 
+ * @async
+ * @function get_urls
+ * @returns {Promise<Object[]>} An array of URL entries if successful.
+ * @throws {Error} If the URLs cannot be fetched from the database.
+ * 
+ * @example
+ * const urls = await get_urls();
+ * console.log(urls);
+ * // Output:
+ * // [
+ * //   { id: 1, long_url: "https://example.com", short_url: "abc123", clicks: 0, created_at: "2025-03-31T12:00:00.000Z" },
+ * //   { id: 2, long_url: "https://another.com", short_url: "xyz789", clicks: 5, created_at: "2025-03-31T12:05:00.000Z" }
+ * // ]
+ */
+const get_urls = async () => {
+  try {
+    let res = await queries.fetch_all();
+    return res;
+  } catch (error) {
+    console.log("Error fetching urls:", error);
+    throw new Error("Failed to fetch urls");
+  }
+}
+
+module.exports = { add_url, get_urls };
