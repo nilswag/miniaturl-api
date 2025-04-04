@@ -58,7 +58,7 @@ const get_urls = async (req, res, next) => {
     res.status(200).send(confirm);
   } catch (error) {
     const err = new Error("Failed to fetch urls");
-    err.status = 404;
+    err.status = 500;
     return next(err);
   }
 }
