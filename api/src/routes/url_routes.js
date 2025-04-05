@@ -3,11 +3,10 @@
  * 
  * @module url_routes
  */
-
-const express = require("express");
+import express from "express";
+import * as controller from "../controllers/url_controller.js";
+import auth from "../middleware/auth_middleware.js";
 const router = express.Router();
-const controller = require("../controllers/url_controller");
-const auth = require("../middleware/auth_middleware");
 
 /**
  * Middleware to authenticate all routes in this router.
@@ -16,13 +15,11 @@ const auth = require("../middleware/auth_middleware");
  * @function
  * @memberof module:url_routes
  * @inner
- * @param {Function} auth.authenticate - The authentication middleware function.
- * 
  * @example
  * // All routes in this router will require authentication:
  * router.use(auth.authenticate);
  */
-router.use(auth.authenticate);
+router.use(auth);
 
 /**
  * Route to add a new URL.
@@ -34,7 +31,7 @@ router.use(auth.authenticate);
  * @param {Object} req - The HTTP request object.
  * @param {Object} req.body - The request body containing the URL data.
  * @param {string} req.body.long_url - The original long URL.
- * @param {string} req.body.short_url - The shortened URL (optional).
+ * @param {string} [req.body.short_url] - The shortened URL (optional).
  * @param {Object} res - The HTTP response object.
  * @param {Function} next - The next middleware function.
  * 
@@ -43,14 +40,20 @@ router.use(auth.authenticate);
  * // { "long_url": "https://example.com", "short_url": "abc123" }
  * 
  * // Response:
- * // { "id": 1, "long_url": "https://example.com", "short_url": "abc123", "clicks": 0, "created_at": "2025-03-31T12:00:00.000Z" }
+ * // {
+ * //   "id": 1,
+ * //   "long_url": "https://example.com",
+ * //   "short_url": "abc123",
+ * //   "clicks": 0,
+ * //   "created_at": "2025-03-31T12:00:00.000Z"
+ * // }
  */
 router.post("/add", controller.add_url);
 
 /**
  * Route to retrieve all URLs.
  * 
- * @name GET /urls
+ * @name GET /all
  * @function
  * @memberof module:url_routes
  * @inner
@@ -60,7 +63,7 @@ router.post("/add", controller.add_url);
  * 
  * @example
  * // Example request:
- * // GET /urls
+ * // GET /all
  * 
  * // Example response:
  * // {
@@ -72,4 +75,4 @@ router.post("/add", controller.add_url);
  */
 router.get("/all", controller.get_urls);
 
-module.exports = { router };
+export default router;

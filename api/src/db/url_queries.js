@@ -3,8 +3,7 @@
  * 
  * @module url_queries
  */
-
-const { run_query } = require("./db")
+import { run_query } from "./db.js";
 
 /**
  * Adds a new entry to the `urls` table.
@@ -20,7 +19,7 @@ const { run_query } = require("./db")
  * const result = await add_entry("https://example.com", "abc123");
  * console.log(result);
  */
-const add_entry = async (long_url, short_url) => {
+export const add_entry = async (long_url, short_url) => {
   try {
     const res = await run_query(
       `
@@ -30,7 +29,7 @@ const add_entry = async (long_url, short_url) => {
       `,
       [ long_url, short_url ]
     );
-    return res.rows[0] ? res.rows : null;
+    return res.rows[0] || null;
   } catch (error) {
     const err = new Error("Error running query: " + error.message);
     err.status = 500;
@@ -51,7 +50,7 @@ const add_entry = async (long_url, short_url) => {
  * const result = await fetch_id(1);
  * console.log(result);
  */
-const fetch_id = async (id) => {
+export const fetch_id = async (id) => {
   try {
     const res = await run_query(
       `
@@ -61,7 +60,7 @@ const fetch_id = async (id) => {
       [ id ]
     );
   
-    return res.rows[0] ? res.rows : null;
+    return res.rows[0] || null;
   } catch (error) {
     const err = new Error("Error running query: " + error.message);
     err.status = 500;
@@ -82,7 +81,7 @@ const fetch_id = async (id) => {
  * const result = await fetch_long("https://example.com");
  * console.log(result);
  */
-const fetch_long = async (long_url) => {
+export const fetch_long = async (long_url) => {
   try {
     const res = await run_query(
       `
@@ -92,7 +91,7 @@ const fetch_long = async (long_url) => {
       [ long_url ]
     );
   
-    return res.rows[0] ? res.rows : null;
+    return res.rows[0] || null;
   } catch (error) {
     const err = new Error("Error running query: " + error.message);
     err.status = 500;
@@ -113,7 +112,7 @@ const fetch_long = async (long_url) => {
  * const result = await fetch_short("abc123");
  * console.log(result);
  */
-const fetch_short = async (short_url) => {
+export const fetch_short = async (short_url) => {
   try {
     const res = await run_query(`
       SELECT * FROM urls
@@ -122,7 +121,7 @@ const fetch_short = async (short_url) => {
       [ short_url ]
     );
   
-    return res.rows[0] ? res.rows : null;
+    return res.rows[0] || null;
   } catch (error) {
     const err = new Error("Error running query: " + error.message);
     err.status = 500;
@@ -142,7 +141,7 @@ const fetch_short = async (short_url) => {
  * const result = await fetch_all();
  * console.log(result);
  */
-const fetch_all = async () => {
+export const fetch_all = async () => {
   try {
     const res = await run_query(`SELECT * FROM urls`);
     
@@ -153,5 +152,3 @@ const fetch_all = async () => {
     throw err;
   }
 }
-
-module.exports = { add_entry, fetch_id, fetch_long, fetch_short, fetch_all };

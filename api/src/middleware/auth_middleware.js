@@ -3,10 +3,8 @@
  * 
  * @module auth_middlewares
  */
-
-const jwt = require("jsonwebtoken");
-const { v4 } = require("uuid");
-const { log } = require("./log_middleware");
+import jwt from "jsonwebtoken";
+import { v4 } from "uuid";
 
 /**
  * Middleware to authenticate requests using a JWT token.
@@ -26,7 +24,7 @@ const { log } = require("./log_middleware");
  * const { authenticate } = require("./auth_middleware");
  * app.use(authenticate);
  */
-const authenticate = (req, res, next) => {
+export const authenticate = (req, res, next) => {
   let token = req.headers.authorization && req.headers.authorization.split(" ")[1];
 
   if (!token) {
@@ -41,7 +39,7 @@ const authenticate = (req, res, next) => {
       token,
       {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== "development",
+        secure: true,
         sameSite: "Lax",
         maxAge: 30 * 24 * 60 * 60 * 1000,
       }
@@ -59,4 +57,4 @@ const authenticate = (req, res, next) => {
   }
 }
 
-module.exports = { authenticate };
+export default authenticate;

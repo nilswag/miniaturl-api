@@ -4,15 +4,21 @@
  * @module url_controller
  */
 
-const service = require("../services/url_service");
+import * as service from "../services/url_service.js";
 
 /**
  * Adds a new URL to the database.
  * 
- * @param {*} req - The HTTP request object.
- * @param {*} res - The HTTP response object.
+ * @async
+ * @function add_url
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} req.body - The body of the HTTP request.
+ * @param {string} req.body.long_url - The long URL to be added.
+ * @param {Object} res - The HTTP response object.
+ * @param {Function} next - The middleware function to handle errors.
+ * @returns {Promise<void>} Sends a confirmation response or an error message.
  */
-const add_url = async (req, res, next) => {
+export const add_url = async (req, res, next) => {
   const long_url = req.body.long_url;
 
   try {
@@ -52,7 +58,7 @@ const add_url = async (req, res, next) => {
  * //   ]
  * // }
  */
-const get_urls = async (req, res, next) => {
+export const get_urls = async (req, res, next) => {
   try {
     let confirm = await service.get_urls();
     res.status(200).send(confirm);
@@ -62,5 +68,3 @@ const get_urls = async (req, res, next) => {
     return next(err);
   }
 }
-
-module.exports = { add_url, get_urls };

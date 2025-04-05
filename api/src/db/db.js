@@ -3,8 +3,8 @@
  * 
  * @module db
  */
-
-const { Pool } = require("pg");
+import pkg from 'pg';  // Default import for CommonJS
+const { Pool } = pkg;
 
 /**
  * Creates a connection pool to the PostgreSQL database using environment variables.
@@ -16,7 +16,7 @@ const { Pool } = require("pg");
  * - PG_PASSWORD: Database password
  * - PG_PORT: Database port
  */
-const pool = new Pool({
+export const pool = new Pool({
   user: process.env.PG_USER,
   host: process.env.PG_HOST,
   database: process.env.PG_DATABASE,
@@ -30,6 +30,7 @@ const pool = new Pool({
 pool.connect()
   .then(client => {
     console.log(`Connected to database '${process.env.PG_DATABASE}' at '${process.env.PG_HOST}'`);
+    client.release(); // Ensure the client is released back to the pool
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -48,7 +49,7 @@ pool.connect()
  * const result = await run_query("SELECT * FROM users WHERE id = $1", [1]);
  * console.log(result.rows);
  */
-const run_query = async (query, values = []) => {
+export const run_query = async (query, values = []) => {
   try {
     const res = await pool.query(query, values);
     return res;
@@ -58,5 +59,3 @@ const run_query = async (query, values = []) => {
     throw err;
   }
 };
-
-module.exports = { pool, run_query };

@@ -11,10 +11,10 @@
  * @returns {string} A randomly generated short URL consisting of 8 alphanumeric characters.
  * 
  * @example
- * const { generate_url } = require("./url_generator");
+ * import generate_url from "./url_generator.js";
  * const short_url = generate_url();
  * console.log(short_url);
- * // Output: "aBc123Xy" (example output, will vary)
+ * // Example output: "aBc123Xy" (output will vary)
  */
 const generate_url = () => {
   const characters = "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijlkmnopqrstuvwxyz0123456789";
@@ -24,4 +24,4 @@ const generate_url = () => {
   return short_url;
 };
 
-module.exports = generate_url;
+export default generate_url;

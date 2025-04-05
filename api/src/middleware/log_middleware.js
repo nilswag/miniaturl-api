@@ -3,8 +3,7 @@
  * 
  * @module log_middlewares
  */
-
-const format_timestamp = require("../util/timestamp");
+import format_timestamp from "../util/timestamp.js";
 
 /**
  * Logs incoming HTTP requests to the console.
@@ -18,7 +17,7 @@ const format_timestamp = require("../util/timestamp");
  * app.use(log);
  * // Logs: [2025-03-31 12:00:00] GET request at /api/resource
  */
-const log = (req, res, next) => {
+export const log = (req, res, next) => {
   console.log(`[${format_timestamp()}] ${req.method} request at ${req.url}`);
   
   next();
@@ -37,7 +36,7 @@ const log = (req, res, next) => {
  * app.use(error);
  * // Sends: { error: "Error message", timestamp: "2025-03-31 12:00:00" }
  */
-const error = (err, req, res, next) => {
+export const error = (err, req, res, next) => {
   const timestamp = format_timestamp();
 
   console.error(`[${timestamp}] Error: ${err.message || "Internal server error"}`);
@@ -47,5 +46,3 @@ const error = (err, req, res, next) => {
     timestamp: timestamp
   });
 };
-
-module.exports = { log, error };

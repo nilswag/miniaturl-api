@@ -1,24 +1,25 @@
-
 // Setup database
-const setup = require("./db/setup");
-setup.urls(); // Setup urls table in database
+import * as setup from "./db/setup.js";
+setup.urls();
 
 // Server setup
-const express = require("express");
+import express from "express";
+import cookieParser from "cookie-parser";
+import { log, error } from "./middleware/log_middleware.js";
+import router from "./routes/url_routes.js";
+
 const app = express();
 
 // Global middleware
-app.use(express.json()); // Use json middleware to handle json requests
-app.use(require("cookie-parser")()); // Use cookie-parser middleware to handle cookies
-app.use(require("./middleware/log_middleware").log); // Use log middleware to log requests
+app.use(express.json());
+app.use(cookieParser());
+app.use(log);
 
 // Setup routers
-app.use("/api/url", require("./routes/url_routes").router);
+app.use("/api/url", router);
 
-// Error middleware should be last middleware
-app.use(require("./middleware/log_middleware").error); // Use error middleware to handle errors
+// Error middleware (should be last)
+app.use(error);
 
-
-// Setup
 const port = 5000;
 app.listen(port, () => console.log(`Server listening on port ${port}`));

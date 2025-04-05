@@ -1,20 +1,22 @@
 /**
  * Service module for handling URL-related business logic.
  * 
+ * This module provides functions to add and retrieve URLs from the database.
+ * It ensures that short URLs are unique and handles database interactions.
+ * 
  * @module url_service
  */
-
-const queries = require("../db/url_queries");
-const generate_url = require("../util/url_generator");
+import * as queries from "../db/url_queries.js";
+import generate_url from "../util/url_generator.js";
 
 /**
- * Adds a new URL to the database.
+ * Adds a new URL to the database after generating a unique short URL.
  * 
  * @async
  * @function add_url
  * @param {string} long_url - The original long URL to be shortened.
  * @returns {Promise<Object>} The inserted URL entry, including the generated short URL.
- * @throws {Error} If the URL cannot be added to the database.
+ * @throws {Error} If the URL cannot be added to the database or if an error occurs during processing.
  * 
  * @example
  * const result = await add_url("https://example.com");
@@ -28,7 +30,7 @@ const generate_url = require("../util/url_generator");
  * //   created_at: "2025-03-31T12:00:00.000Z"
  * // }
  */
-const add_url = async (long_url) => {
+export const add_url = async (long_url) => {
   let short_url = generate_url();
 
   // Ensure the generated short URL is unique
@@ -40,7 +42,7 @@ const add_url = async (long_url) => {
       else break;
       tries++;
     } catch (error) {
-      const err = new Error("Error fetching URL: " + error);
+      const err = new Error("Error fetching URL: " + error.message);
       err.status = 500;
       throw err;
     }
@@ -51,7 +53,7 @@ const add_url = async (long_url) => {
     let res = await queries.add_entry(long_url, short_url);
     return res;
   } catch (error) {
-    const err = new Error("Error adding URL: " + error);
+    const err = new Error("Error adding URL: " + error.message);
     err.status = 500;
     throw err; 
   }
@@ -63,7 +65,7 @@ const add_url = async (long_url) => {
  * @async
  * @function get_urls
  * @returns {Promise<Object[]|null>} An array of URL entries if successful, or `null` if no rows are found.
- * @throws {Error} If the URLs cannot be fetched from the database.
+ * @throws {Error} If an error occurs while fetching URLs from the database.
  * 
  * @example
  * const urls = await get_urls();
@@ -74,7 +76,7 @@ const add_url = async (long_url) => {
  * //   { id: 2, long_url: "https://another.com", short_url: "xyz789", clicks: 5, created_at: "2025-03-31T12:05:00.000Z" }
  * // ]
  */
-const get_urls = async () => {
+export const get_urls = async () => {
   try {
     let res = await queries.fetch_all();
     return res;
@@ -84,5 +86,3 @@ const get_urls = async () => {
     throw err;
   }
 }
-
-module.exports = { add_url, get_urls };

@@ -3,28 +3,28 @@
  * 
  * @module setup
  */
-
-const { run_query } = require("./db");
+import { run_query } from "./db.js";
 
 /**
- * Creates the `urls` table in the database if it does not already exist.
+ * Ensures the `urls` table exists in the database. If the table does not exist, it will be created.
  * 
  * Table Schema:
- * - `id` (SERIAL PRIMARY KEY): Unique identifier for each URL.
- * - `long_url` (TEXT NOT NULL): The original long URL.
- * - `short_url` (VARCHAR(8) UNIQUE NOT NULL): The shortened URL, must be unique.
- * - `clicks` (INT DEFAULT 0): The number of times the shortened URL has been clicked.
- * - `created_at` (TIMESTAMP DEFAULT CURRENT_TIMESTAMP): The timestamp when the URL was created.
+ * - `id` (SERIAL PRIMARY KEY): Unique identifier for each URL entry.
+ * - `long_url` (TEXT NOT NULL): The original long URL to be shortened.
+ * - `short_url` (VARCHAR(8) UNIQUE NOT NULL): The shortened URL, must be unique and limited to 8 characters.
+ * - `clicks` (INT DEFAULT 0): Tracks the number of times the shortened URL has been accessed.
+ * - `created_at` (TIMESTAMP DEFAULT CURRENT_TIMESTAMP): Automatically records the creation timestamp of the URL entry.
  * 
  * @async
  * @function urls
- * @returns {Promise<void>} Resolves when the table is successfully created.
+ * @throws {Error} Throws an error with status 500 if the table creation fails.
+ * @returns {Promise<void>} Resolves when the `urls` table is successfully created or already exists.
  * 
  * @example
- * const { urls } = require("./setup");
+ * import { urls } from "./setup.js";
  * await urls(); // Ensures the `urls` table exists in the database.
  */
-const urls = async () => {
+export const urls = async () => {
   try {
     await run_query(`
       CREATE TABLE IF NOT EXISTS urls (
@@ -41,5 +41,3 @@ const urls = async () => {
     throw err;
   }
 };
-
-module.exports = { urls };
