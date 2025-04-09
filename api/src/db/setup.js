@@ -6,7 +6,7 @@
 import { run_query } from "./db.js";
 
 /**
- * Ensures the `urls` table exists in the database. If the table does not exist, it will be created.
+ * Ensures the `url` table exists in the database. If the table does not exist, it will be created.
  *
  * Table Schema:
  * - `id` (SERIAL PRIMARY KEY): Unique identifier for each URL entry.
@@ -16,13 +16,13 @@ import { run_query } from "./db.js";
  * - `created_at` (TIMESTAMP DEFAULT CURRENT_TIMESTAMP): Automatically records the creation timestamp of the URL entry.
  *
  * @async
- * @function urls
+ * @function url
  * @throws {Error} Throws an error with status 500 if the table creation fails.
- * @returns {Promise<void>} Resolves when the `urls` table is successfully created or already exists.
+ * @returns {Promise<void>} Resolves when the `url` table is successfully created or already exists.
  *
  * @example
- * import { urls } from "./setup.js";
- * await urls(); // Ensures the `url` table exists in the database.
+ * import { url } from "./setup.js";
+ * await url(); // Ensures the `url` table exists in the database.
  */
 export const url = async () => {
   try {
