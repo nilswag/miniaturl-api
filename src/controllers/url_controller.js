@@ -1,6 +1,6 @@
 /**
  * Controller for handling URL-related operations.
- * 
+ *
  * @module url_controller
  */
 
@@ -8,7 +8,7 @@ import * as service from "../services/url_service.js";
 
 /**
  * Adds a new URL to the database.
- * 
+ *
  * @async
  * @function add_url
  * @param {Object} req - The HTTP request object.
@@ -41,14 +41,14 @@ export const add_url = async (req, res, next) => {
 
 /**
  * Retrieves all URLs from the database and sends them in the response.
- * 
+ *
  * @async
  * @function get_urls
  * @param {Object} req - The HTTP request object.
  * @param {Object} res - The HTTP response object.
  * @param {Function} next - The middleware function to handle errors.
  * @returns {Promise<void>} Sends a JSON response containing all URLs or an error message.
- * 
+ *
  * @example
  * // Example response:
  * // {
@@ -67,4 +67,4 @@ export const get_urls = async (req, res, next) => {
     err.status = 500;
     return next(err);
   }
-}
+};

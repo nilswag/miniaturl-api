@@ -1,33 +1,33 @@
 /**
  * Database setup module for creating necessary tables.
- * 
+ *
  * @module setup
  */
 import { run_query } from "./db.js";
 
 /**
- * Ensures the `urls` table exists in the database. If the table does not exist, it will be created.
- * 
+ * Ensures the `url` table exists in the database. If the table does not exist, it will be created.
+ *
  * Table Schema:
  * - `id` (SERIAL PRIMARY KEY): Unique identifier for each URL entry.
  * - `long_url` (TEXT NOT NULL): The original long URL to be shortened.
  * - `short_url` (VARCHAR(8) UNIQUE NOT NULL): The shortened URL, must be unique and limited to 8 characters.
  * - `clicks` (INT DEFAULT 0): Tracks the number of times the shortened URL has been accessed.
  * - `created_at` (TIMESTAMP DEFAULT CURRENT_TIMESTAMP): Automatically records the creation timestamp of the URL entry.
- * 
+ *
  * @async
- * @function urls
+ * @function url
  * @throws {Error} Throws an error with status 500 if the table creation fails.
- * @returns {Promise<void>} Resolves when the `urls` table is successfully created or already exists.
- * 
+ * @returns {Promise<void>} Resolves when the `url` table is successfully created or already exists.
+ *
  * @example
- * import { urls } from "./setup.js";
- * await urls(); // Ensures the `urls` table exists in the database.
+ * import { url } from "./setup.js";
+ * await url(); // Ensures the `url` table exists in the database.
  */
-export const urls = async () => {
+export const url = async () => {
   try {
     await run_query(`
-      CREATE TABLE IF NOT EXISTS urls (
+      CREATE TABLE IF NOT EXISTS url (
         id SERIAL PRIMARY KEY,
         long_url TEXT NOT NULL,
         short_url VARCHAR(8) UNIQUE NOT NULL,
@@ -36,7 +36,7 @@ export const urls = async () => {
       )
     `);
   } catch (error) {
-    const err = new Error("Error creating urls table: " + error.message);
+    const err = new Error("Error creating url table: " + error.message);
     err.status = 500;
     throw err;
   }
