@@ -30,7 +30,7 @@ export const add_url = async (req, res, next) => {
   }
 
   try {
-    let confirm = await service.add_url(long_url);
+    let confirm = await service.add_url(long_url, req.auth_token.id);
     res.status(200).send(confirm);
   } catch (error) {
     const err = new Error("Failed to add URL");
@@ -63,7 +63,18 @@ export const get_urls = async (req, res, next) => {
     let confirm = await service.get_urls();
     res.status(200).send(confirm);
   } catch (error) {
-    const err = new Error("Failed to fetch urls" + error.message);
+    const err = new Error("Failed to fetch urls " + error.message);
+    err.status = 500;
+    return next(err);
+  }
+};
+
+export const get_urls_user = async (req, res, next) => {
+  try {
+    let confirm = await service.get_urls_user(req.auth_token.id);
+    res.status(200).send(confirm);
+  } catch (error) {
+    const err = new Error("Failed to fetch ulrs " + error.message);
     err.status = 500;
     return next(err);
   }

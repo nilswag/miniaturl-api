@@ -1,16 +1,18 @@
 /**
  * Express router module for handling URL-related routes.
- * 
+ *
  * @module url_routes
  */
 import express from "express";
 import * as controller from "../controllers/url_controller.js";
-import auth from "../middleware/auth_middleware.js";
+import * as auth from "../middleware/auth_middleware.js";
 const router = express.Router();
+
+router.use(auth.generate_token);
 
 /**
  * Middleware to authenticate all routes in this router.
- * 
+ *
  * @name router.use
  * @function
  * @memberof module:url_routes
@@ -19,11 +21,11 @@ const router = express.Router();
  * // All routes in this router will require authentication:
  * router.use(auth.authenticate);
  */
-router.use(auth);
+router.use(auth.authenticate);
 
 /**
  * Route to add a new URL.
- * 
+ *
  * @name POST /add
  * @function
  * @memberof module:url_routes
@@ -34,11 +36,11 @@ router.use(auth);
  * @param {string} [req.body.short_url] - The shortened URL (optional).
  * @param {Object} res - The HTTP response object.
  * @param {Function} next - The next middleware function.
- * 
+ *
  * @example
  * // Request body:
  * // { "long_url": "https://example.com", "short_url": "abc123" }
- * 
+ *
  * // Response:
  * // {
  * //   "id": 1,
@@ -52,7 +54,7 @@ router.post("/add", controller.add_url);
 
 /**
  * Route to retrieve all URLs.
- * 
+ *
  * @name GET /all
  * @function
  * @memberof module:url_routes
@@ -60,11 +62,11 @@ router.post("/add", controller.add_url);
  * @param {Object} req - The HTTP request object.
  * @param {Object} res - The HTTP response object.
  * @param {Function} next - The next middleware function.
- * 
+ *
  * @example
  * // Example request:
  * // GET /all
- * 
+ *
  * // Example response:
  * // {
  * //   "urls": [

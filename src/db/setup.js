@@ -32,7 +32,8 @@ export const url = async () => {
         long_url TEXT NOT NULL,
         short_url VARCHAR(8) UNIQUE NOT NULL,
         clicks INT DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        user_id VARCHAR(128) UNIQUE NOT NULL
       )
     `);
   } catch (error) {
