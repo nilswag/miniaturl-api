@@ -1,6 +1,6 @@
 // Setup database
 import * as setup from "./db/setup.js";
-setup.urls();
+setup.url();
 
 // Server setup
 import express from "express";
